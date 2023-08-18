@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "fayri-bot"
+version = "0.1.0"
+description = ""
+authors = ["Fiersik <tltkirik@gmail.com>"]
+readme = "README.md"
+packages = [{include = "fayri_bot"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+vkbottle = {url = "https://github.com/vkbottle/vkbottle/archive/refs/heads/dev.zip"}
+loguru = "^0.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
