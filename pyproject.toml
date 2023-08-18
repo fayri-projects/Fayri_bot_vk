@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "fayri-bot"
-version = "4.0"
+version = "4.2"
 description = ""
 authors = ["Fiersik <tltkirik@gmail.com>"]
 readme = "README.md"
 packages = [{include = "fayri_bot"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 vkbottle = {url = "https://github.com/vkbottle/vkbottle/archive/refs/heads/dev.zip"}
 loguru = "^0.7.0"
 
