@@ -16,11 +16,12 @@ class MyKeyboard:
 
     menu = (
         Keyboard(one_time=False)
-        .add(Text("отправить тз"))
+        .add(Text("заказать"), KeyboardButtonColor.POSITIVE)
+        .add(OpenLink("https://vk.com/@fayri_bots-shablon-tz", "шаблон тз"))
         .row()
-        .add(OpenLink("https://vk.com/@fayri_bots-shablon-tz", "посмотреть шаблон тз"))
+        .add(Text("настроить пример"), KeyboardButtonColor.POSITIVE)
         .row()
-        .add(Text("настроить пример"))
+        .add(Text("информация"), KeyboardButtonColor.POSITIVE)
     )
     
     back = (
@@ -31,7 +32,7 @@ class MyKeyboard:
 
     example = (
         Keyboard(inline=True)
-        .add(Text("удалить пример"))
+        .add(Text("удалить пример"), KeyboardButtonColor.NEGATIVE)
         .row()
         .add(OpenLink("https://vk.me/fayri_example", "посмотреть"))
     )

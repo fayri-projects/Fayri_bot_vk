@@ -5,6 +5,7 @@ from config import example_api, db
 #============================================================
 
 bot = Bot(api=example_api)
+bot.labeler.vbml_ignore_case = True
 #============================================================
 
 def gen_list(lst: list, num: int):
