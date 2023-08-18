@@ -17,6 +17,7 @@ class MyKeyboard:
     menu = (
         Keyboard(one_time=False)
         .add(Text("заказать"), KeyboardButtonColor.POSITIVE)
+        .row()
         .add(OpenLink("https://vk.com/@fayri_bots-shablon-tz", "шаблон тз"))
         .row()
         .add(Text("настроить пример"), KeyboardButtonColor.POSITIVE)
