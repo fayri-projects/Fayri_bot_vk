@@ -7,7 +7,11 @@ from vkbottle import (
     EMPTY_KEYBOARD
 )
 from vkbottle.bot import Message
+#============================================================
 
+def gen_list(lst: list, num: int):
+    for i in range((len(lst) + num-1) // num):
+        yield lst[i*num:(i+1)*num]
 #============================================================
 
 class MyKeyboard:
@@ -30,14 +34,12 @@ class MyKeyboard:
         .add(Text("назад", {"cmd":"menu"}), KeyboardButtonColor.NEGATIVE)
     )
 
-
     example = (
         Keyboard(inline=True)
         .add(Text("удалить пример"), KeyboardButtonColor.NEGATIVE)
         .row()
         .add(OpenLink("https://vk.me/fayri_example", "посмотреть"))
     )
-
 
     def get_chat(m:Message):
         keyboard = (
@@ -49,4 +51,25 @@ class MyKeyboard:
                 )
             )
         )
+        return keyboard
+    
+
+    add_example = (
+        Keyboard(inline=True)
+        .add(OpenLink("https://vk.me/fayri_bots", "создать"))
+    )
+
+    buy_bot = (
+        Keyboard(inline=True)
+        .add(OpenLink("https://vk.me/fayri_bots", "заказать"))
+    )
+
+    def create_example_keyboard(names:str):
+
+        keyboard = Keyboard(False)
+        
+        for name in gen_list(names, 3):
+            for button in name:
+                keyboard.add(Text(button, {"cmd":"order"}))
+            keyboard.row()
         return keyboard

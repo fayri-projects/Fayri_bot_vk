@@ -10,6 +10,34 @@ customer.vbml_ignore_case = True
 customer.message_view.replace_mention = True
 #============================================================
 
+async def message_to_admin(m: Message, type:str):
+    """type = order or help"""
+
+    user = await m.ctx_api.users.get(m.from_id)
+    name = user[0].first_name
+    surname = user[0].last_name
+
+    if type  == "order":
+        flag = "[НОВЫЙ ЗАКАЗ]"
+    else:
+        flag = "[ПОМОЩЬ]"
+
+    message=f"""
+{flag}
+[id{m.from_id}|{name} {surname}]
+
+{m.text}
+    """
+
+    await m.ctx_api.messages.send(
+        creator_id,
+        random_id=m.date,
+        message=message,
+        keyboard=MyKeyboard.get_chat(m)
+    )
+
+#============================================================
+
 @customer.private_message(payload={"command":"start"})
 async def start(m:Message):
     user = await m.ctx_api.users.get(m.from_id)
@@ -27,14 +55,20 @@ async def menu(m:Message):
     if await state_dispenser.get(m.from_id):
         await state_dispenser.delete(m.from_id)
 
-    await m.answer("чем я могу вам помочь?", keyboard=MyKeyboard.menu)
+    await m.answer(
+        "чем я могу вам помочь?", 
+        keyboard=MyKeyboard.menu
+    )
 #============================================================
 
 @customer.private_message(lev="заказать")
 async def get_tz(m:Message):
 
     await state_dispenser.set(m.from_id, GetTZ.get)
-    await m.answer("Прикрепите файл с техническим заданием", keyboard=MyKeyboard.back)
+    await m.answer(
+        "Прикрепите файл с техническим заданием", 
+        keyboard=MyKeyboard.back
+    )
     return
 
 
@@ -44,20 +78,7 @@ async def get_tz(m:Message):
     if not m.get_attachment_strings():
         await m.answer("Прикреплённый файл не обнаружен")
     else:
-
-        user = await m.ctx_api.users.get(m.from_id)
-        name = user[0].first_name
-        surname = user[0].last_name
-
-        message=f"НОВЫЙ ЗАКАЗ\n[id{m.from_id}|{name} {surname}]\n{m.text}"
-
-        await m.ctx_api.messages.send(
-            creator_id,
-            random_id=m.date,
-            message=message,
-            keyboard=MyKeyboard.get_chat(m)
-        )
-
+        await message_to_admin(m, "order")
         await m.answer("Техническое задание отправлено, скоро с вами свяжется администратор")
         await menu(m)
 #============================================================
@@ -68,11 +89,17 @@ async def customize_example(m:Message):
     user = db.get_example(m)
     
     if user:
-        await m.answer("У вас уже есть настроенный пример", keyboard=MyKeyboard.example)
+        await m.answer(
+            "У вас уже есть настроенный пример", 
+            keyboard=MyKeyboard.example
+        )
         return
 
     await state_dispenser.set(m.from_id, Example.number_of_buttons)
-    await m.answer("Введите количество кнопок (1-9)", keyboard=MyKeyboard.back)
+    await m.answer(
+        "Введите количество кнопок (1-9)",
+        keyboard=MyKeyboard.back
+    )
     return
 
 
@@ -105,7 +132,10 @@ async def customize_example_names(m:Message):
     else:
         db.safe_example(m, buttons, m.text)
         ctx.delete(f"{m.from_id}_buttons")
-        await m.answer("Ваш пример готов", keyboard=MyKeyboard.example)
+        await m.answer(
+            "Ваш пример готов", 
+            keyboard=MyKeyboard.example
+        )
         await state_dispenser.delete(m.from_id)
 #============================================================
 
@@ -140,4 +170,5 @@ async def help(m:Message):
         await menu(m)
     else:
         await m.answer("я не знаю что на это ответить, уже сообщил администратору, ожидайте.")
+        await message_to_admin(m, "help")
 #============================================================

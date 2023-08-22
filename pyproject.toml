@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fayri-bot"
-version = "4.2"
+version = "4.3"
 description = ""
 authors = ["Fiersik <tltkirik@gmail.com>"]
 readme = "README.md"
