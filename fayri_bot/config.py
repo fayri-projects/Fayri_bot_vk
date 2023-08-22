@@ -7,14 +7,14 @@ from vkbottle.bot import BotLabeler
 from modules import BotDB
 #============================================================
 
-EXAMPLE_API = ""
-BOT_TOKEN = ""
+EXAMPLE_TOKEN = os.environ["FAYRI_EXAMPLE_TOKEN"]
+BOT_TOKEN = os.environ["FAYRI_BOT_TOKEN"]
 #APP_TOKEN = 
 
 creator_id = 603843114
 #============================================================
 
-example_api = API(EXAMPLE_API)
+example_api = API(EXAMPLE_TOKEN)
 bot_api = API(BOT_TOKEN)
 #app_api = API(APP_TOKEN)
 
